@@ -19,10 +19,11 @@ public class LoginPage implements ActionListener {
         logininfo = loginInfoOriginal;
 
         userIDLabel.setBounds(50,100,75,25);
-        userPasswordLabel.setBounds(50,120,75,25);
+        userPasswordLabel.setBounds(50,150,75,25);
 
         messageLabel.setBounds(125,250,250,35);
         messageLabel.setFont(new Font(null,Font.ITALIC,25));
+        messageLabel.setVisible(false);
 
         userIDField.setBounds(125,100,200,25);
         userPasswordField.setBounds(125,150,200,25);
@@ -53,6 +54,30 @@ public class LoginPage implements ActionListener {
         if(e.getSource()==resetButton){
             userIDField.setText("");
             userPasswordField.setText("");
+            messageLabel.setVisible(false);
+        }
+
+        if(e.getSource()==loginButton){
+            String userID = userIDField.getText();
+            String password = String.valueOf(userPasswordField.getPassword());
+            messageLabel.setVisible(true);
+
+            if (logininfo.containsKey(userID)) {
+                if(logininfo.get(userID).equals(password)){
+                    //String user = logininfo.get(userID);
+                    messageLabel.setForeground(Color.green);
+                    messageLabel.setText("Login successful");
+                    WelcomePage welcomePage = new WelcomePage(userID);
+
+                }else{
+                    messageLabel.setForeground(Color.red);
+                    messageLabel.setText("Wrong password");
+                }
+            }
+            else{
+                messageLabel.setForeground(Color.red);
+                messageLabel.setText("Username not found");
+            }
         }
     }
 }
